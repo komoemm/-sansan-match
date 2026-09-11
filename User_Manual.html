@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SanSan Data Matcher - အသုံးပြုသူလက်စွဲ (User Manual)</title>
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3B82F6;
+            --success: #15803D;
+            --success-bg: #DCFCE7;
+            --danger: #B91C1C;
+            --danger-bg: #FEE2E2;
+            --warning: #B45309;
+            --warning-bg: #FEF3C7;
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pyidaungsu', 'Myanmar3', 'Noto Sans Myanmar', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.8;
+            color: var(--text-main);
+            background-color: var(--bg);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .title-group h1 {
+            color: var(--primary);
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .title-group p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .badge-offline {
+            background: #E0E7FF;
+            color: #3730A3;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Navigation Quick Links */
+        .quick-nav {
+            background: #F1F5F9;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .quick-nav span {
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 6px;
+        }
+
+        .quick-nav a {
+            text-decoration: none;
+            color: var(--primary-light);
+            background: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .quick-nav a:hover {
+            background: var(--primary-light);
+            color: #FFFFFF;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #EFF6FF;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            color: #334155;
+            font-size: 1.15rem;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        /* Step Cards */
+        .step-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--primary-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-badge {
+            background: var(--primary);
+            color: #FFFFFF;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Code & Pre */
+        pre, code {
+            font-family: Consolas, 'Courier New', monospace;
+            background: #0F172A;
+            color: #38BDF8;
+            border-radius: 6px;
+        }
+
+        code {
+            padding: 2px 6px;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            padding: 14px 18px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-size: 0.95rem;
+            border-left: 4px solid var(--primary-light);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #F1F5F9;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        /* Callouts / Notes */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 0.95rem;
+        }
+
+        .alert-info {
+            background-color: #EFF6FF;
+            border-left: 5px solid #3B82F6;
+            color: #1E40AF;
+        }
+
+        .alert-success {
+            background-color: var(--success-bg);
+            border-left: 5px solid var(--success);
+            color: #166534;
+        }
+
+        .alert-warning {
+            background-color: var(--warning-bg);
+            border-left: 5px solid var(--warning);
+            color: #92400E;
+        }
+
+        /* Screenshot Box */
+        .img-container {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .img-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #FFF;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .quick-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <div class="title-group">
+            <h1>SanSan Data Matcher Web Application</h1>
+            <p>အသုံးပြုသူလက်စွဲနှင့် စနစ်တပ်ဆင်ခြင်း လမ်းညွှန် (User Manual & Setup Guide)</p>
+        </div>
+        <div>
+            <span class="badge-offline">🌐 Offline Version 1.0</span>
+        </div>
+    </header>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <span>အမြန်သွားရန်:</span>
+        <a href="#overview">မိတ်ဆက်</a>
+        <a href="#requirements">စနစ်လိုအပ်ချက်များ</a>
+        <a href="#setup">တပ်ဆင်နည်း</a>
+        <a href="#launch">App စတင်ဖွင့်နည်း</a>
+        <a href="#guide">အသုံးပြုပုံ အဆင့်ဆင့်</a>
+        <a href="#fields">ကော်လံများ ရှင်းလင်းချက်</a>
+        <a href="#troubleshooting">ပြဿနာဖြေရှင်းခြင်း</a>
+    </div>
+
+    <!-- 1. Overview -->
+    <section id="overview">
+        <h2>📌 ၁။ မိတ်ဆက်နှင့် ရည်ရွယ်ချက် (Overview)</h2>
+        <p>
+            ဤ <strong>SanSan Data Matcher Web Application</strong> သည် SanSan စနစ်မှ ထုတ်ယူရရှိသော <strong>CSV Operation Records</strong> ဖိုင်များနှင့် 
+            ကုမ္ပဏီ၏ <strong>CIC Daily Capacity Excel ဖိုင် (.xlsx)</strong> ကြားရှိ အချက်အလက်များ (Match Rates) မှန်ကန်ကိုက်ညီမှု ရှိ/မရှိကို 
+            အလိုအလျောက် တိုက်ဆိုင်စစ်ဆေးပေးသည့် ကိရိယာဖြစ်ပါသည်။
+        </p>
+        <p>
+            ယခင်က လူကိုယ်တိုင် Excel တွင် <code>Ctrl + F</code> ဖြင့် ဝန်ထမ်းအမည်ရှာ၍ အချက်အလက်တစ်ခုချင်းစီ စစ်ဆေးခဲ့ရသော လုပ်ငန်းစဉ်ကို 
+            ယခု Web App အားဖြင့် စက္ကန့်ပိုင်းအတွင်း အချက်အလက်ရာပေါင်းများစွာကို တပြိုင်နက်တည်း အလိုအလျောက် စစ်ဆေးပေးပြီး အစီရင်ခံစာ ထုတ်ပေးနိုင်မည် ဖြစ်ပါသည်။
+        </p>
+    </section>
+
+    <!-- 2. System Requirements -->
+    <section id="requirements">
+        <h2>💻 ၂။ ကွန်ပျူတာ စနစ်လိုအပ်ချက်များ (System Requirements)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">အမျိုးအစား</th>
+                    <th>အသေးစိတ် လိုအပ်ချက်</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Operating System</strong></td>
+                    <td>Windows 10 သို့မဟုတ် Windows 11 (64-bit)</td>
+                </tr>
+                <tr>
+                    <td><strong>Web Browser</strong></td>
+                    <td>Google Chrome, Microsoft Edge, သို့မဟုတ် Mozilla Firefox</td>
+                </tr>
+                <tr>
+                    <td><strong>Python Environment</strong></td>
+                    <td>Python Version 3.10 သို့မဟုတ် အထက် (Python 3.13 ထည့်သွင်းထားရန် အကြံပြုပါသည်)</td>
+                </tr>
+                <tr>
+                    <td><strong>လိုအပ်သော Python Packages</strong></td>
+                    <td>
+                        <code>streamlit</code> (Web Interface အတွက်)<br>
+                        <code>pandas</code> (Data ဖတ်ရှုတွက်ချက်ရန်)<br>
+                        <code>openpyxl</code> (Excel ဖိုင်များ ဖတ်ရှုထုတ်လုပ်ရန်)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 3. Setup & Installation -->
+    <section id="setup">
+        <h2>⚙️ ၃။ ပထမဆုံးအကြိမ် တပ်ဆင်နည်း (One-Time Setup)</h2>
+        <p>အသုံးပြုမည့် ကွန်ပျူတာတွင် အောက်ပါအဆင့် (၂) ဆင့်အတိုင်း တစ်ကြိမ်သာ တပ်ဆင်ရန် လိုအပ်ပါသည် -</p>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၁</span> Python သွင်းယူခြင်း (မရှိသေးပါက)
+            </div>
+            <p>ကွန်ပျူတာတွင် Python မရှိသေးပါက တရားဝင် ဝဘ်ဆိုက် <a href="https://www.python.org/downloads/" target="_blank">python.org</a> မှ ဒေါင်းလုဒ်ရယူပါ။</p>
+            <div class="alert alert-warning">
+                <strong>⚠️ အထူးသတိပြုရန်:</strong> Python ကို Install လုပ်သည့်အခါ အောက်ခြေရှိ <strong>"Add python.exe to PATH"</strong> ဆိုသည့် checkbox လေးကို မဖြစ်မနေ အမှန်ခြစ် ပေးခဲ့ရပါမည်။
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၂</span> လိုအပ်သော Library များကို အလိုအလျောက် သွင်းယူခြင်း
+            </div>
+            <p>ဖိုဒါထဲရှိ <code>install_requirements.bat</code> ဖိုင်ကို <strong>Double-Click (၂ ချက်နှိပ်)</strong> လိုက်ရုံဖြင့် လိုအပ်သော Library များ အားလုံး အလိုအလျောက် သွင်းယူပေးသွားမည် ဖြစ်ပါသည်။</p>
+            <pre>install_requirements.bat</pre>
+            <div class="alert alert-success">
+                <strong>အောင်မြင်သည့်အခါ:</strong> Command Prompt အမည်းရောင် Box တွင် <em>"[အောင်မြင်ပါသည်] Package များ အားလုံး အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ"</em> ဟု ပြသပါမည်။
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. How to Launch -->
+    <section id="launch">
+        <h2>🚀 ၄။ Web App ကို စတင်ဖွင့်လှစ်နည်း (How to Launch)</h2>
+        <p>နေ့စဉ် အသုံးပြုလိုသည့်အခါ အောက်ပါအတိုင်း လွယ်ကူစွာ စတင်နိုင်ပါသည် -</p>
+        
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">👉</span> 1-Click Launch (အလွယ်ကူဆုံးနည်းလမ်း)
+            </div>
+            <p>ဖိုဒါထဲရှိ <strong><code>Launch_WebApp.bat</code></strong> ကို Double-Click နှိပ်လိုက်ပါ။</p>
+            <p>ခဏအကြာတွင် သင့် ကွန်ပျူတာ၏ Web Browser (Chrome/Edge) တွင် Web App စာမျက်နှာ အလိုအလျောက် ပွင့်လာပါမည်။</p>
+            <p>အကယ်၍ Browser အလိုအလျောက် ပွင့်မလာပါက Browser ကို ဖွင့်ပြီး အောက်ပါလိပ်စာကို ရိုက်ထည့်နိုင်ပါသည် -</p>
+            <pre>http://localhost:8501</pre>
+        </div>
+    </section>
+
+    <!-- 5. Step-by-Step Usage Guide -->
+    <section id="guide">
+        <h2>📖 ၅။ အသုံးပြုပုံ အဆင့်ဆင့် လမ်းညွှန် (Step-by-Step User Guide)</h2>
+
+        <!-- Screenshot display -->
+        <div class="img-container">
+            <img src="dashboard_screenshot.png" alt="Streamlit Web App Dashboard Screenshot">
+            <div class="img-caption">ပုံ (၁) - Web App စတင်ဖွင့်လှစ်ချိန်တွင် တွေ့မြင်ရမည့် Dashboard မြင်ကွင်း</div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၁</span> ဖိုင်များ ထည့်သွင်းခြင်း (File Source)
+            </div>
+            <p>ဘယ်ဘက် Sidebar ရှိ <strong>"Choose Input Mode"</strong> တွင် ရွေးချယ်နိုင်သော နည်းလမ်း (၂) မျိုး ရှိပါသည် -</p>
+            <ul>
+                <li><strong>Use Local Workspace Files (မူလနည်းလမ်း):</strong> ဖိုဒါထဲတွင် ရှိနှင့်ပြီးသား Excel နှင့် CSV ဖိုင်များကို အလိုအလျောက် ရှာဖွေပြီး ရွေးချယ်ပေးပါမည်။ ဖိုင်အသစ် ထပ်မတင်လိုပါက ဤနည်းလမ်းသည် အမြန်ဆန်ဆုံး ဖြစ်ပါသည်။</li>
+                <li><strong>Upload New Files:</strong> ရက်စွဲအသစ်ဖြင့် အခြားဖိုင်များကို စစ်ဆေးလိုပါက Excel ဖိုင် (.xlsx) နှင့် CSV ဖိုင်များကို ကွန်ပျူတာထဲမှ Drag & Drop ဆွဲထည့်နိုင်ပါသည်။</li>
+            </ul>
+            <div class="alert alert-info">
+                💡 <strong>မှတ်ချက်:</strong> CSV ဖိုင် တင်သည့်အခါ <strong>名刺 (Business Card) CSV</strong> နှင့် <strong>項目選択 (Item Selection) CSV</strong> ဖိုင် (၂) မျိုးစလုံးကို တပြိုင်နက်တည်း ရွေးချယ် တင်သွင်းနိုင်ပါသည်။
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၂</span> Excel နှင့် Field များကို သတ်မှတ်ခြင်း (Configuration)
+            </div>
+            <p>စာမျက်နှာထိပ်ရှိ <strong>"⚙️ Excel & Mapping Configuration"</strong> ကဏ္ဍတွင် အောက်ပါတို့ကို လိုအပ်သလို ညှိယူနိုင်ပါသည် -</p>
+            <ul>
+                <li><strong>Excel Sheet to Check:</strong> စစ်ဆေးမည့် Sheet အမည် (မူလသတ်မှတ်ချက်: <code>Monthly Record</code>)</li>
+                <li><strong>Header Row:</strong> Excel ၏ ခေါင်းစဉ်အတန်း နံပါတ် (မူလသတ်မှတ်ချက်: <code>Row 3</code>)</li>
+                <li><strong>Excel User Identifier Column:</strong> ဝန်ထမ်းကုဒ်ပါသော ကော်လံ (မူလသတ်မှတ်ချက်: <code>User Identifier</code>)</li>
+                <li><strong>Target Fields to Verify:</strong> စစ်ဆေးလိုသော အချက် (၁၂) ချက်ကို Checkbox ဖြင့် လိုအပ်သလို အမှန်ခြစ် ဖြုတ်/တပ် ပြုလုပ်နိုင်ပါသည်။</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၃</span> ရလဒ် အနှစ်ချုပ်ကို ကြည့်ရှုခြင်း (Reviewing Results)
+            </div>
+            <p>စနစ်မှ အချက်အလက်များကို အလိုအလျောက် တွက်ချက်ပြီး ကတ်ပြား (၄) ခုဖြင့် ရှင်းလင်းစွာ ဖော်ပြပေးပါမည် -</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ကတ်ပြားအမည်</th>
+                        <th>အရောင်</th>
+                        <th>အဓိပ္ပာယ်</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total Values Checked</strong></td>
+                        <td>အပြာရောင်</td>
+                        <td>စစ်ဆေးခဲ့သော စုစုပေါင်း ကိန်းဂဏန်း အရေအတွက် (ဥပမာ - ၅၃၉ ခု)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Matched Values</strong></td>
+                        <td>အစိမ်းရောင်</td>
+                        <td>CSV နှင့် Excel ဖိုင် ၂ ခုစလုံးတွင် အတိအကျ ကိုက်ညီသော အရေအတွက် နှင့် ရာခိုင်နှုန်း (%)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mismatches</strong></td>
+                        <td>အနီရောင်</td>
+                        <td>တန်ဖိုး ကွဲလွဲနေသည့် အရေအတွက် (ဥပမာ - CSV တွင် 96.59 ဖြစ်ပြီး Excel တွင် 95.00 ဖြစ်နေခြင်း)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Missing / Unmatched</strong></td>
+                        <td>အဝါရောင်</td>
+                        <td>CSV တွင် ပါပြီး Excel တွင် အကွက်လွတ်နေခြင်း သို့မဟုတ် Excel တွင် ရှိပြီး CSV တွင် မပါခြင်း</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၄</span> အချက်အလက်များ စစ်ထုတ်ရှာဖွေခြင်း (Filter & Search)
+            </div>
+            <p>အောက်ဘက်ရှိ <strong>"Comparison Details"</strong> ဇယားတွင် အချက်အလက်များကို အသေးစိတ် စစ်ဆေးနိုင်ပါသည် -</p>
+            <ul>
+                <li><strong>Filter by Status:</strong> <code>Only Mismatches</code> ကို ရွေးချယ်ပါက အမှားများကိုသာ သီးသန့် မြင်တွေ့ရမည်ဖြစ်ပြီး၊ <code>All</code> ရွေးချယ်ပါက အားလုံးကို ပြသပါမည်။</li>
+                <li><strong>Filter by Field:</strong> စစ်ဆေးလိုသော ကော်လံတစ်ခုတည်း (ဥပမာ - <code>Item Select</code> သို့မဟုတ် <code>Date</code>) ကိုသာ ရွေးချယ် ကြည့်ရှုနိုင်ပါသည်။</li>
+                <li><strong>Search Box:</strong> ရှာဖွေလိုသော ဝန်ထမ်း၏ User Identifier (ဥပမာ - <code>iida_NiNiTun</code>) သို့မဟုတ် Operator Name ကို ရိုက်ထည့်၍ ရှာဖွေနိုင်ပါသည်။</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">
+                <span class="step-badge">၅</span> Excel အစီရင်ခံစာ ဒေါင်းလုဒ် ရယူခြင်း (Export Report)
+            </div>
+            <p>စာမျက်နှာ အောက်ဆုံးရှိ <strong>"Download Excel Report (.xlsx)"</strong> ခလုတ်ကို နှိပ်ပါက စစ်ဆေးထားသော အချက်အလက် အပြည့်အစုံကို အရောင်ခွဲခြား သတ်မှတ်ထားသည့် Excel ဖိုင်ဖြင့် ဒေါင်းလုဒ် ဆွဲယူနိုင်ပါသည် -</p>
+            <ul>
+                <li>အစိမ်းရောင်ဆဲလ် (Light Green): ကိုက်ညီသော တန်ဖိုးများ (MATCH)</li>
+                <li>အနီရောင်ဆဲလ် (Light Red): ကွဲလွဲနေသော တန်ဖိုးများ (MISMATCH)</li>
+                <li>အဝါရောင်ဆဲလ် (Light Yellow): အကွက်လွတ်နေသော တန်ဖိုးများ (MISSING)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 6. Field Mapping Table -->
+    <section id="fields">
+        <h2>📊 ၆။ စစ်ဆေးသော ကော်လံများ ဖွဲ့စည်းပုံ (Field Mapping Table)</h2>
+        <p>အပလီကေးရှင်းမှ အလိုအလျောက် ချိတ်ဆက်စစ်ဆေးပေးသော ကော်လံ (၁၂) မျိုးမှာ အောက်ပါအတိုင်း ဖြစ်ပါသည် -</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>စဉ်</th>
+                    <th>Field အမည်</th>
+                    <th>CSV မူရင်းအမည်</th>
+                    <th>Excel ကော်လံ</th>
+                    <th>Excel ကော်လံခေါင်းစဉ်</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>၁</td>
+                    <td><strong>Item Select</strong></td>
+                    <td>項目選択 CSV (matchRate)</td>
+                    <td><strong>Column L</strong></td>
+                    <td>Item Select</td>
+                </tr>
+                <tr>
+                    <td>၂</td>
+                    <td><strong>Date</strong></td>
+                    <td>temp: <code>Date</code> / 日付</td>
+                    <td><strong>Column I</strong></td>
+                    <td>Date</td>
+                </tr>
+                <tr>
+                    <td>၃</td>
+                    <td><strong>Email</strong></td>
+                    <td>temp: <code>Email</code> / Email</td>
+                    <td><strong>Column G</strong></td>
+                    <td>Email</td>
+                </tr>
+                <tr>
+                    <td>၄</td>
+                    <td><strong>Fax</strong></td>
+                    <td>temp: <code>FAX</code> / FAX</td>
+                    <td><strong>Column J</strong></td>
+                    <td>Fax</td>
+                </tr>
+                <tr>
+                    <td>၅</td>
+                    <td><strong>Full Name</strong></td>
+                    <td>temp: <code>full name</code> / 氏名</td>
+                    <td><strong>Column K</strong></td>
+                    <td>Full Name</td>
+                </tr>
+                <tr>
+                    <td>၆</td>
+                    <td><strong>MOBILE</strong></td>
+                    <td>temp: <code>mobile</code> / 携帯</td>
+                    <td><strong>Column R</strong></td>
+                    <td>MOBILE</td>
+                </tr>
+                <tr>
+                    <td>၇</td>
+                    <td><strong>TEL</strong></td>
+                    <td>temp: <code>TEL</code> / TEL</td>
+                    <td><strong>Column Q</strong></td>
+                    <td>TEL</td>
+                </tr>
+                <tr>
+                    <td>၈</td>
+                    <td><strong>URL</strong></td>
+                    <td>temp: <code>URL</code> / URL</td>
+                    <td><strong>Column H</strong></td>
+                    <td>URL</td>
+                </tr>
+                <tr>
+                    <td>၉</td>
+                    <td><strong>Address</strong></td>
+                    <td>temp: <code>Address</code> / 住所</td>
+                    <td><strong>Column P</strong></td>
+                    <td>Address</td>
+                </tr>
+                <tr>
+                    <td>၁၀</td>
+                    <td><strong>Company Name</strong></td>
+                    <td>temp: <code>company</code> / 会社</td>
+                    <td><strong>Column M</strong></td>
+                    <td>Company Name</td>
+                </tr>
+                <tr>
+                    <td>၁၁</td>
+                    <td><strong>Division Name</strong></td>
+                    <td>temp: <code>division</code> / 部署</td>
+                    <td><strong>Column N</strong></td>
+                    <td>Division Name</td>
+                </tr>
+                <tr>
+                    <td>၁၂</td>
+                    <td><strong>Position Name</strong></td>
+                    <td>temp: <code>position</code> / 役職</td>
+                    <td><strong>Column O</strong></td>
+                    <td>Position Name</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 7. Troubleshooting -->
+    <section id="troubleshooting">
+        <h2>🛠️ ၇။ မကြာခဏ ကြုံတွေ့ရတတ်သော ပြဿနာများနှင့် ဖြေရှင်းနည်း (Troubleshooting)</h2>
+
+        <h3>Q1: <code>Launch_WebApp.bat</code> ကို နှိပ်သော်လည်း အမည်းရောင် Box ခဏ ပေါ်လာပြီး ပိတ်သွားပါသည်</h3>
+        <p><strong>အကြောင်းရင်း:</strong> ကွန်ပျူတာတွင် Python မသွင်းရသေးခြင်း သို့မဟုတ် Python PATH မချိတ်ဆက်ထားခြင်းကြောင့် ဖြစ်နိုင်ပါသည်။</p>
+        <p><strong>ဖြေရှင်းနည်း:</strong> Python ကို ပြန်လည် Install ပြုလုပ်ပြီး <strong>"Add python.exe to PATH"</strong> ကို အမှန်ခြစ် ပေးပါ။ ထို့နောက် Command Prompt ဖွင့်၍ <code>python --version</code> ရိုက်နှိပ်ပြီး စစ်ဆေးပါ။</p>
+
+        <h3>Q2: "No module named 'streamlit'" သို့မဟုတ် Library အမှား ပြသနေပါသည်</h3>
+        <p><strong>ဖြေရှင်းနည်း:</strong> ဖိုဒါထဲရှိ <code>install_requirements.bat</code> ကို Double-Click ပြန်လည် နှိပ်ပြီး Library များကို သွင်းယူပေးပါ။</p>
+
+        <h3>Q3: Port 8501 is already in use ဆိုသော အမှား ပြသနေပါသည်</h3>
+        <p><strong>အကြောင်းရင်း:</strong> အရင်ဖွင့်ထားသော Streamlit Web App မပိတ်ရသေးဘဲ နောက်တစ်ခု ထပ်ဖွင့်ခြင်း ဖြစ်ပါသည်။</p>
+        <p><strong>ဖြေရှင်းနည်း:</strong> ယခင်ဖွင့်ထားသော Command Prompt Box ကို ပိတ်လိုက်ပါ သို့မဟုတ် Browser တွင် ဖွင့်ထားပြီးသား tab သို့ တိုက်ရိုက် သွားရောက် အသုံးပြုနိုင်ပါသည်။</p>
+
+        <h3>Q4: အင်တာနက် လိုင်းမရှိဘဲ သုံးစွဲနိုင်ပါသလား?</h3>
+        <p><strong>အဖြေ:</strong> ဟုတ်ကဲ့၊ သုံးစွဲနိုင်ပါသည်။ ပထမဆုံး အကြိမ် Library များ ဒေါင်းလုဒ်ယူချိန် (install_requirements.bat ပြုလုပ်ချိန်) မှလွဲ၍ နေ့စဉ် ပုံမှန် အသုံးပြုရာတွင် အင်တာနက် လုံးဝ ချိတ်ဆက်ရန် မလိုဘဲ Offline အပြည့်အဝ အသုံးပြုနိုင်ပါသည်။</p>
+    </section>
+
+    <!-- 8. Project Files Summary -->
+    <section>
+        <h2>📁 ၈။ ဖိုဒါအတွင်း ပါဝင်သော ဖိုင်များ အကျဉ်းချုပ်</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ဖိုင်အမည်</th>
+                    <th>ဖော်ပြချက်</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>app.py</code></td>
+                    <td>Streamlit Web App ၏ အဓိက Python Code ဖိုင်</td>
+                </tr>
+                <tr>
+                    <td><code>Launch_WebApp.bat</code></td>
+                    <td>Web App ကို တစ်ချက်နှိပ်ရုံဖြင့် ဖွင့်လှစ်ပေးသည့် Shortcut ဖိုင်</td>
+                </tr>
+                <tr>
+                    <td><code>install_requirements.bat</code></td>
+                    <td>လိုအပ်သော Package များကို တစ်ချက်နှိပ်ရုံဖြင့် သွင်းယူပေးသည့် ဖိုင်</td>
+                </tr>
+                <tr>
+                    <td><code>requirements.txt</code></td>
+                    <td>လိုအပ်သော Python Libraries များ စာရင်း (streamlit, pandas, openpyxl)</td>
+                </tr>
+                <tr>
+                    <td><code>User_Manual.html</code></td>
+                    <td>ယခုဖတ်ရှုနေသော မြန်မာဘာသာဖြင့် အသုံးပြုသူလက်စွဲ ဝဘ်စာမျက်နှာ (Offline ဖွင့်နိုင်သည်)</td>
+                </tr>
+                <tr>
+                    <td><code>dashboard_screenshot.png</code></td>
+                    <td>လက်စွဲစာမျက်နှာတွင် ဖော်ပြထားသော Dashboard ပုံရိပ်</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 SanSan Data Matcher System | Document Prepared for Client Reference</p>
+        <p>ဤလက်စွဲစာမျက်နှာကို မည်သည့် Web Browser ဖြင့်မဆို အင်တာနက် မလိုဘဲ တိုက်ရိုက်ဖွင့်လှစ် ဖတ်ရှုနိုင်ပါသည်။</p>
+    </footer>
+</div>
+
+</body>
+</html>
