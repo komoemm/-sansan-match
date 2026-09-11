@@ -15,6 +15,7 @@ env/
 *.xlsx
 *.xls
 *.csv
+*.pem
 
 # OS generated files
 Thumbs.db
