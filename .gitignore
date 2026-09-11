@@ -16,6 +16,7 @@ env/
 *.xls
 *.csv
 *.pem
+connect_lightsail.bat
 
 # OS generated files
 Thumbs.db
